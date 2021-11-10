@@ -5,8 +5,9 @@ using UnityEngine;
 public class randomizeColor : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start(/**Bucket**/ )
+    void Start()
     {
+        Color forRound = new Color32(0,0,0,0);
         //Randomize ints to use as values
         int rojo = Random.Range(0, 256);
         int verde = Random.Range(0, 256);
@@ -18,7 +19,7 @@ public class randomizeColor : MonoBehaviour
             byte red = (byte)rojo;
             byte green = (byte)verde;
             byte blue = (byte)azul;
-            Color forRound = new Color32(red, green, blue, 255); //255 is alpha value
+            forRound = new Color32(red, green, blue, 255); //255 is alpha value
         }
         catch (System.OverflowException)
         {
@@ -26,7 +27,12 @@ public class randomizeColor : MonoBehaviour
         }
 
         //Set bucket color to color
-        //Bucket.set
+
+        //Get the Renderer component from the new cube
+        var cubeRenderer = this.GetComponent<Renderer>();
+
+        //Call SetColor using the shader property name "_Color" and setting the color to red
+        cubeRenderer.material.SetColor("_Color", forRound);
     }
 
     // Update is called once per frame
